@@ -62,7 +62,7 @@ class TestCalculator < Test::Unit::TestCase
     assert_equal(rpn.process_input("/"), "NaN")
     assert_equal(rpn.process_input("14"), "14")
     assert_equal(rpn.process_input("5"), "5")
-    assert_equal(rpn.process_input("/"), "2")
+    assert_equal(rpn.process_input("/"), "2.8")
     assert_equal(rpn.process_input("15"), "15")
     assert_equal(rpn.process_input("2.0"), "2.0")
     assert_equal(rpn.process_input("/"), "7.5")

@@ -32,9 +32,20 @@ private
     true if Float(line) rescue false
   end
 
+  def is_integer?(s) 
+    true if Integer(s) rescue false
+  end
+
+  def handle_division
+    return false, "NaN" if @tokens.last == "0"
+    # force one of Integers to a Float if division yields a remainder
+    @tokens[-1] += ".0" if is_integer?(@tokens[-1]) && is_integer?(@tokens[-2]) && Integer(@tokens[-2]) % Integer(@tokens[-1]) != 0
+    return true
+  end
+
   def validate(operator)
     return false, @tokens.last if @tokens.length == 1
-    return false, "NaN" if @tokens.last == "0" && operator == '/' 
+    return handle_division if operator == '/'
     return true
   end
 

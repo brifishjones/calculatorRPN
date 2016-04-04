@@ -31,7 +31,7 @@ Reverse Polish Notation Calculator written in Ruby
 5. A leading 0 is inserted before a decimal so that eval works properly (e.g. .01 becomes 0.01).
 
 6. Divide by 0 returns NaN if a least two tokens exist. If division is by two
-   integers then a truncated integer is returned.
+   integers and there is a remainder then a decimal is returned.
 
 7. If the "Enter" key is pressed with no value, the last token on the stack is duplicated
    then added to the stack.
