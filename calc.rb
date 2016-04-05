@@ -1,3 +1,6 @@
+require 'bigdecimal'
+require 'bigdecimal/util'
+
 class Calculator
 
   def process_input(line)
@@ -32,25 +35,13 @@ private
     true if Float(line) rescue false
   end
 
-  def is_integer?(s) 
-    true if Integer(s) rescue false
-  end
-
-  def handle_division
-    return false, "NaN" if @tokens.last == "0"
-    # force one of Integers to a Float if division yields a remainder
-    @tokens[-1] += ".0" if is_integer?(@tokens[-1]) && is_integer?(@tokens[-2]) && Integer(@tokens[-2]) % Integer(@tokens[-1]) != 0
-    return true
-  end
-
   def validate(operator)
     return false, @tokens.last if @tokens.length == 1
-    return handle_division if operator == '/'
+    return false, "NaN" if operator == '/' && @tokens.last == "0"
     return true
   end
 
   def append(token)
-    token.sub!(/^(\-?)(\.)/, "\\10\\2")   # insist that there is a leading 0 before any decimal point
     @tokens.push(token)
     @tokens.last
   end
@@ -58,9 +49,12 @@ private
   def calculate(operator)
     valid, msg = validate(operator)
     return msg if !valid
-    b = @tokens.pop
-    a = @tokens.pop
-    append(String(eval(String(a) + operator + String(b))))
+    # convert to BigDecimal to avoid rounding errors
+    b = @tokens.pop.to_d
+    a = @tokens.pop.to_d
+    # Do the calculation, convert to float then string, and remove trailing .0 if result is an integer
+    # Thanks to http://stackoverflow.com/questions/20019668/ruby-string-to-operator for a better way to deal with '+', '-', '*', and '/' 
+    append((a.method(operator).(b)).to_f.to_s.sub(/\.0$/, ""))
   end
 
 end

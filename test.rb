@@ -40,7 +40,7 @@ class TestCalculator < Test::Unit::TestCase
     assert_equal(rpn.process_input("-7"), "-7")
     assert_equal(rpn.process_input("8"), "8")
     assert_equal(rpn.process_input("*"), "-56")
-    assert_equal(rpn.process_input("*"), "0")
+    assert_equal(rpn.process_input("*"), "-0")
     assert_equal(rpn.process_input("6"), "6")
     assert_equal(rpn.process_input(""), "6")
     assert_equal(rpn.process_input("5.01"), "5.01")
@@ -48,7 +48,7 @@ class TestCalculator < Test::Unit::TestCase
     assert_equal(rpn.process_input("2.0467e100"), "2.0467e100")
     assert_equal(rpn.process_input("1000"), "1000")
     assert_equal(rpn.process_input("*"), "2.0467e+103")
-    assert_equal(rpn.process_input("-.000000001"), "-0.000000001")
+    assert_equal(rpn.process_input("-.000000001"), "-.000000001")
     assert_equal(rpn.process_input("*"), "-2.0467e+94")
   end
   def test_division

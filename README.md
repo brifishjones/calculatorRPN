@@ -24,11 +24,10 @@ Reverse Polish Notation Calculator written in Ruby
 
 3. If there is only one token then its value is returned when an operator is entered. 
 
-4. All values are stored as strings so that "eval" can be used instead of writing
-   separate add, subtract, multiply, and divide methods, as well as not having to
-   figure out whether the number is an int, float, or exponential.
+4. All values are stored as strings and Object#method is used instead of writing
+   separate add, subtract, multiply, and divide methods. (e.g. 4.method('+').(7))
 
-5. A leading 0 is inserted before a decimal so that eval works properly (e.g. .01 becomes 0.01).
+5. Calculations are done using BigDecimals to prevent rounding errors.
 
 6. Divide by 0 returns NaN if a least two tokens exist. If division is by two
    integers and there is a remainder then a decimal is returned.
@@ -40,11 +39,10 @@ Reverse Polish Notation Calculator written in Ruby
 
 ## Usage
 
-1. Make sure Ruby is installed. 
+1. Make sure Ruby 1.9.3 or later is installed. 
 
 2. At the command prompt enter "ruby main.rb"
 
 3. Calculator also works with data from a file. Enter "ruby main.rb < test-data.txt"
 
-4. To run unit tests enter "ruby test.rb". Note that 2 of the tests fail due to rounding errors
-   when using Ruby 1.9 and 2.2. There are no failures with 1.8.7.
+4. To run unit tests enter "ruby test.rb". 
